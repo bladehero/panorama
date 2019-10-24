@@ -1,0 +1,383 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var scenes = OdekuTour.Loader.Scenes;
+}
+
+<style>
+
+    /*
+       -----------------------------
+              Common styles
+       -----------------------------
+    */
+    .del-scene,
+    .check-scene,
+    .scene-row {
+        cursor: pointer;
+    }
+    .custom-file-label::after {
+        content: 'Обзор';
+    }
+    #show-scene-img {
+        width: 100%;
+        height: auto;
+    }
+
+    /*
+       -----------------------------
+              Tooltip styles
+       -----------------------------
+    */
+    .tip {
+        display: inline-block;
+        cursor: pointer;
+    }
+    .tooltip-inner {
+        max-width: 500px;
+        width: 500px;
+    }
+    .tooltip.show {
+        opacity: 1;
+    }
+</style>
+
+<div class="row">
+    <div class="col">
+        <p class="display-4 text-lg-left text-center">Разделы</p>
+    </div>
+</div>
+<div class="row">
+    <table class="table table-striped table-dark table-hover">
+        <thead>
+            <tr class="text-center">
+                <th scope="col">Сцена</th>
+                <th scope="col">Изображение</th>
+                <th scope="col">Угол обзора</th>
+                <th scope="col">Главная</th>
+                <th scope="col">Раздел</th>
+                <th scope="col">Удалить</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var scene in scenes)
+            {
+                <tr class="text-center" data-name="@scene.Name">
+                    <td>
+                        <span class="scene-row text-info">@scene.Name</span>
+                    </td>
+                    <td>
+                        <span class="tip" data-tip="tip_@scene.GetHashCode()" data-image="@scene.Panorama">@scene.Image</span>
+                    </td>
+                    <td>@scene.Hfov°</td>
+                    <td><span class="check-scene">@(scene.IsMain ? "✔" : "")</span></td>
+                    <td><span class="check-scene">@(scene.IsUnit ? "✔" : "")</span></td>
+                    <td><span class="del-scene" data-name="@scene.Name">✖</span></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @foreach (var scene in scenes)
+    {
+        <div class="tip-content collapse" id="tip_@scene.GetHashCode()">
+            <div class="card bg-transparent">
+                <img class="card-img-bottom" src="~/@scene.Panorama" alt="Сцена: @scene.Image" />
+            </div>
+        </div>
+    }
+</div>
+<div class="row justify-content-end">
+    <button type="button" class="btn btn-success" id="add-scene-btn">Добавить</button>
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" id="del-modal-scene">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Подтверждение удаления</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Вы уверены что хотите удалить эту сцену?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                <button type="button" class="btn btn-primary" id="del-scene-btn">Удалить</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" id="add-modal-scene">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Добавление/Обновление сцены</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label for="name-scene">Сцена</label>
+                <input type="text" class="form-control" id="name-scene">
+                <label for="hfov-scene">Угол обзора</label>
+                <input type="number" class="form-control mb-3" id="hfov-scene" min="0" max="180">
+                <div class="row">
+                    <div class="col-12">
+                        <input type="checkbox" id="use-previous-image" />
+                        <label for="use-previous-image">Использовать текущее изображение</label>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="file" class="custom-file-input" id="inputGroupFile">
+                    <label class="custom-file-label" for="inputGroupFile" aria-describedby="inputGroupFileAddon" id="label-file">Выберите файл...</label>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <input type="checkbox" id="autoLoad-scene" />
+                        <label for="autoLoad-scene">Автозагрузка</label>
+                    </div>
+                    <div class="col-12">
+                        <input type="checkbox" id="isMain-scene" />
+                        <label for="isMain-scene">Главная сцена</label>
+                    </div>
+                    <div class="col-12">
+                        <input type="checkbox" id="isUnit-scene" />
+                        <label for="isUnit-scene">Раздел</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                <button type="button" class="btn btn-success" id="add-modal-scene-btn">Добавить</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" id="show-modal-scene">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-content">
+                    <img id="show-scene-img" src="#" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#navbar-panel .nav-link').removeClass('active');
+            $('#main-link').addClass('active');
+            $('.del-scene').click(function () {
+                var name = $(this).attr('data-name');
+                $('#del-modal-scene').modal('show');
+                $('#del-scene-btn').off('click').click(function () {
+                    $.ajax({
+                        url: '@Url.Action("DeleteScene", "Home")?name=' + name,
+                        success: function (result) {
+                            if (result.success) {
+                                swal({
+                                    title: "Успешно",
+                                    text: result.text,
+                                    icon: "success",
+                                    button: "ОК",
+                                }).then(function () {
+                                    document.location.reload();
+                                });
+                                $('#del-modal-scene').modal('hide');
+                            } else {
+                                swal({
+                                    title: "Ошибка!",
+                                    icon: "error",
+                                    button: "ОК",
+                                }).then(function () {
+                                    document.location.reload();
+                                });
+                                $('#del-modal-scene').modal('hide');
+                            }
+                        }
+                    });
+                });
+            });
+            $('.scene-row').click(function () {
+                var name = $(this).text();
+                $.ajax({
+                    method: 'GET',
+                    url: '@Url.Action("GetScene", "Home")?name=' + name,
+                    success: function (data) {
+                        $('#use-previous-image').off('change').change(function () {
+                            if ($('#inputGroupFile').prop('disabled')) {
+                                $('#inputGroupFile').prop('disabled', false).val(null);
+                                $('#label-file').text('Выберите файл...');
+                            } else {
+                                $('#inputGroupFile').prop('disabled', true).val(null);
+                                $('#label-file').text(data.image);
+                            }
+                        });
+                        $('#name-scene').prop('disabled', true);
+                        $('#use-previous-image').prop('checked', true).parent().parent().removeClass('d-none');
+                        $('#name-scene').addClass('disabled').val(data.name);
+                        $('#hfov-scene').val(data.hfov);
+                        $('#inputGroupFile').val(null).prop('disabled', true);
+                        $('#label-file').text(data.image);
+                        $('#autoLoad-scene').prop('checked', data.autoLoad);
+                        $('#isMain-scene').prop('checked', data.isMain);
+                        $('#isUnit-scene').prop('checked', data.isUnit);
+                        $('#add-modal-scene').modal('show');
+                        $('#add-modal-scene-btn').text('Изменить');
+                        $('#add-modal-scene-btn').off('click').click(function () {
+                            var usePreviousImage = $('#use-previous-image').prop('checked');
+                            if (!usePreviousImage) {
+                                var formdata = new FormData();
+                                var fileInput = $('#inputGroupFile');
+                                var file = fileInput[0].files[0];
+                                formdata.append('file', file);
+                                $.ajax({
+                                    method: 'POST',
+                                    url: '@Url.Action("UploadImage", "Home")',
+                                    processData: false,
+                                    contentType: false,
+                                    data: formdata
+                                }).done(function (data) {
+                                    if (data.success) {
+                                        var scene = {
+                                            Name: $('#name-scene').val(),
+                                            Hfov: $('#hfov-scene').val(),
+                                            Image: $('#label-file').text(),
+                                            Autoload: $('#autoLoad-scene').prop('checked'),
+                                            Ismain: $('#isMain-scene').prop('checked'),
+                                            Isunit: $('#isUnit-scene').prop('checked'),
+                                            UsePreviousImage: usePreviousImage
+                                        };
+                                        $.ajax({
+                                            method: 'POST',
+                                            url: '@Url.Action("UpdateScene", "Home")',
+                                            data: scene
+                                        }).done(function (data) {
+                                            if (data.success) {
+                                                $('#add-modal-scene').modal('hide');
+                                                swal("Добавлено!", "Сцена (" + scene.Name + ") была успешно добавлена", "success").then((value) => {
+                                                    window.location.reload();
+                                                });
+                                            } else {
+                                                swal("Ошибка!", data.message, "error");
+                                            }
+                                        });
+                                    }
+                                    else {
+                                        swal("Ошибка!", data.message, "error");
+                                    }
+                                    formdata.append('scene', scene);
+                                });
+                            } else {
+                                var scene = {
+                                    Name: $('#name-scene').val(),
+                                    Hfov: $('#hfov-scene').val(),
+                                    Image: $('#label-file').text(),
+                                    Autoload: $('#autoLoad-scene').prop('checked'),
+                                    Ismain: $('#isMain-scene').prop('checked'),
+                                    Isunit: $('#isUnit-scene').prop('checked'),
+                                    UsePreviousImage: usePreviousImage
+                                };
+                                $.ajax({
+                                    method: 'POST',
+                                    url: '@Url.Action("UpdateScene", "Home")',
+                                    data: scene
+                                }).done(function (data) {
+                                    if (data.success) {
+                                        $('#add-modal-scene').modal('hide');
+                                        swal("Добавлено!", "Сцена (" + scene.Name + ") была успешно добавлена", "success").then((value) => {
+                                            window.location.reload();
+                                        });
+                                    } else {
+                                        swal("Ошибка!", data.message, "error");
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+            $('#add-scene-btn').click(function () {
+                $('#use-previous-image').prop('checked', false).parent().parent().addClass('d-none');
+                $('#name-scene').prop('disabled', false).val(null);
+                $('#hfov-scene').val(180);
+                $('#inputGroupFile').val(null).prop('disabled', false);
+                $('#label-file').text('Выберите файл...');
+                $('#autoLoad-scene').prop('checked', true);
+                $('#isMain-scene').prop('checked', false);
+                $('#isUnit-scene').prop('checked', false);
+                $('#add-modal-scene').modal('show');
+                $('#add-modal-scene-btn').text('Добавить');
+                $('#add-modal-scene-btn').off('click').click(function () {
+                    var formdata = new FormData();
+                    var fileInput = $('#inputGroupFile');
+                    var file = fileInput[0].files[0];
+                    formdata.append('file', file);
+                    $.ajax({
+                        method: 'POST',
+                        url: '@Url.Action("UploadImage", "Home")',
+                        processData: false,
+                        contentType: false,
+                        data: formdata
+                    }).done(function (data) {
+                        if (data.success) {
+                            var scene = {
+                                Name: $('#name-scene').val(),
+                                Hfov: $('#hfov-scene').val(),
+                                Image: $('#label-file').text(),
+                                Autoload: $('#autoLoad-scene').prop('checked'),
+                                Ismain: $('#isMain-scene').prop('checked'),
+                                Isunit: $('#isUnit-scene').prop('checked')
+                            };
+                            $.ajax({
+                                method: 'POST',
+                                url: '@Url.Action("AddScene", "Home")',
+                                data: scene
+                            }).done(function (data) {
+                                if (data.success) {
+                                    $('#add-modal-scene').modal('hide');
+                                    swal("Добавлено!", "Сцена (" + scene.Name + ") была успешно обновлена", "success").then((value) => {
+                                        window.location.reload();
+                                    });
+                                } else {
+                                    swal("Ошибка!", data.message, "error");
+                                }
+                            });
+                        }
+                        else {
+                            swal("Ошибка!", data.message, "error");
+                        }
+                        formdata.append('scene', scene);
+                    });
+                });
+            });
+            $('#inputGroupFile').on('change', function () {
+                var fileName = $(this).val();
+                $(this).next('.custom-file-label').html(fileName);
+            });
+            $('.tip').each(function () {
+                var id = $(this).data('tip');
+                $(this).tooltip({
+                    html: true,
+                    placement: 'bottom',
+                    title: $('#' + id).html()
+                });
+            }).click(function () {
+                    var img = $(this).data('image');
+                    var title = $(this).text();
+                    $('#show-scene-img').attr('src', '/' + img);
+                    $('#show-modal-scene').modal('show');
+                    $('#show-modal-scene .modal-header > h5').text(title);
+                });
+        });
+    </script>
+}

@@ -1,0 +1,47 @@
+{
+  "$type": "System.Collections.Generic.List`1[[OdekuTour.Settings.Scene, OdekuTour]], System.Private.CoreLib",
+  "$values": [
+    {
+      "$type": "OdekuTour.Settings.Scene, OdekuTour",
+      "Name": "Сцена №1",
+      "Panorama": "images/Scene1.jpg",
+      "Image": "Scene1.jpg",
+      "ShowFullscreenCtrl": false,
+      "AutoLoad": true,
+      "Hfov": 180,
+      "IsMain": true,
+      "IsUnit": true,
+      "Hotspots": {
+        "$type": "System.Collections.Generic.List`1[[OdekuTour.Settings.Hotspots.IHotspot, OdekuTour]], System.Private.CoreLib",
+        "$values": [
+          {
+            "$type": "OdekuTour.Settings.Hotspots.SceneHotspot, OdekuTour",
+            "Pitch": 3.3632171673033673,
+            "Yaw": 1.419129560576073,
+            "Type": "scene",
+            "SceneId": "Сцена №2",
+            "Title": "Указатель №1",
+            "Subtitle": "Подзаголовок",
+            "Description": "Описание",
+            "Footer": "Подпись"
+          }
+        ]
+      }
+    },
+    {
+      "$type": "OdekuTour.Settings.Scene, OdekuTour",
+      "Name": "Сцена №2",
+      "Panorama": "images/Scene2.jpg",
+      "Image": "Scene2.jpg",
+      "ShowFullscreenCtrl": false,
+      "AutoLoad": true,
+      "Hfov": 180,
+      "IsMain": false,
+      "IsUnit": true,
+      "Hotspots": {
+        "$type": "System.Collections.Generic.List`1[[OdekuTour.Settings.Hotspots.IHotspot, OdekuTour]], System.Private.CoreLib",
+        "$values": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+﻿@using OdekuTour.Settings.Hotspots
+@{ 
+    var scenes = OdekuTour.Loader.Scenes;
+    var main = OdekuTour.Loader.Main;
+    var units = OdekuTour.Loader.Units;
+}
+
+<div id="panorama"></div>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            var viewer = pannellum.viewer('panorama', {
+                'default': {
+                    'firstScene': '@main.GetHashCode()',
+                },
+                'scenes': {
+                    @foreach (var scene in scenes)
+                    {
+                       @: '@scene.Name.GetHashCode()': {
+                       @:   'panorama': '@scene.Panorama',
+                       @:   'showFullscreenCtrl': @scene.ShowFullscreenCtrl.ToString().ToLower(),
+                       @:   'autoLoad': @scene.AutoLoad.ToString().ToLower(),
+                       @:   'hfov': @scene.Hfov.ToString().Replace(",", "."),
+                       @:   'hotSpots':[
+                            foreach (var hotspot in scene.Hotspots)
+                            {
+                                @:{
+                                @: 'pitch': @hotspot.Pitch.ToString().Replace(",", "."),
+                                @: 'yaw': @hotspot.Yaw.ToString().Replace(",", "."),
+                                @: 'type': '@hotspot.Type',
+                                @: 'createTooltipFunc': hotspot,
+                                @: 'createTooltipArgs': {
+                                @:      'title': '@hotspot.Title',
+                                @:      'subtitle': '@hotspot.Subtitle',
+                                @:      'description': '@hotspot.Description',
+                                @:      'footer': '@hotspot.Footer',
+                                @: },
+                                if(hotspot is InfoHotspot infoHotspot)
+                                {
+                                @: 'URL': '@infoHotspot.URL',
+                                }
+                                else if (hotspot is SceneHotspot sceneHotspot)
+                                {
+                                @: 'clickHandlerFunc': hotspotClickHandler,
+                                @: 'clickHandlerArgs': { 'id': '@sceneHotspot.SceneId.GetHashCode()' },
+                                @: 'sceneId': '@sceneHotspot.SceneId.GetHashCode()'
+                                }
+                                @:},
+                            }
+                       @: ]},
+                    }
+                }
+            });
+
+            viewer.on('mousedown', function (event) {
+                console.log(viewer.getPitch(), viewer.getYaw());
+                console.log(viewer.mouseEventToCoords(event));
+            });
+            
+            function hotspot(hotSpotDiv, args) {
+                $(hotSpotDiv).mouseenter(function (e) {
+                    $('#description.card>.card-body>.card-title').text("").append(args.title);
+                    $('#description.card>.card-body>.card-subtitle').text("").append(args.subtitle);
+                    $('#description.card>.card-body>.card-text').text("").append(args.description);
+                    $('#description.card>.card-footer>.card-text').append("");
+                    $('#description.card>.card-footer').remove();
+                    if (args.footer && args.footer.trim() != '') {
+                        var footer = '<div class=\"card-footer\"><p class=\"card-text text-right text-warning\">'
+                            + args.footer + '</p></div>';
+                        $('#description.card').append(footer);
+                    }
+                    $('#description').removeClass('fadeIn animated fadeOut invisible').addClass('animated fadeIn');
+                });
+                $(hotSpotDiv).mouseout(function () {
+                    $('#description').addClass('animated fadeOut');
+                });
+            }
+            function hotspotClickHandler(obj, args) {
+                $('#description').addClass('animated fadeOut');
+                $('.nav-link').removeClass('active');
+                $('#' + args.id).addClass('active');
+            }
+            $('#@main.GetHashCode()').addClass('active').click(function () {
+                viewer.loadScene('@main.GetHashCode()');
+                $('.nav-link').removeClass('active');
+                $(this).addClass('active');
+            });
+            @foreach (var unit in units)
+            {
+                @: $('#@unit.Name.GetHashCode()').click(function() {
+                @:     viewer.loadScene('@unit.Name.GetHashCode()');
+                @:     $('.nav-link').removeClass('active');
+                @:     $(this).addClass('active');
+                @: });
+            }
+        });
+    </script>
+}

@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="OdekuTour.Controllers.HomeController" Collapsed="true">
+    <Position X="10" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Controllers\HomeController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdekuTour.Middlewares.TokenMiddleware">
+    <Position X="0.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAACAAAAAAAEAAAAyAAAQAAAAAAA=</HashCode>
+      <FileName>Middlewares\TokenMiddleware.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdekuTour.Settings.Scene">
+    <Position X="0.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAEgAAAAAQIAGAAEZAAAAAAAAACAAA=</HashCode>
+      <FileName>Settings\Scene.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdekuTour.Settings.SettingProvider">
+    <Position X="5.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAAAAAAAAAAACBAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Settings\SettingProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdekuTour.Settings.SettingMessage">
+    <Position X="8.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAABACAAAAAA=</HashCode>
+      <FileName>Settings\SettingProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdekuTour.Settings.Hotspots.InfoHotspot">
+    <Position X="2.25" Y="6.75" Width="1.5" />
+    <InheritanceLine Type="System.Object" ManuallyRouted="true">
+      <Path>
+        <Point X="8.5" Y="1.312" />
+        <Point X="8.5" Y="2.625" />
+        <Point X="7.688" Y="2.625" />
+        <Point X="7.688" Y="6.5" />
+        <Point X="3" Y="6.5" />
+        <Point X="3" Y="6.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAgAEEAQAAAAAAAACAAAAAAAQBAAAAAAAA=</HashCode>
+      <FileName>Settings\Hotspots\InfoHotspot.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OdekuTour.Settings.Hotspots.SceneHotspot">
+    <Position X="4" Y="6.75" Width="1.5" />
+    <InheritanceLine Type="System.Object" ManuallyRouted="true">
+      <Path>
+        <Point X="8.5" Y="1.312" />
+        <Point X="8.5" Y="2.625" />
+        <Point X="7.69" Y="2.625" />
+        <Point X="7.69" Y="6.51" />
+        <Point X="4.75" Y="6.51" />
+        <Point X="4.75" Y="6.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAgCEEAQAAAAAAAAAAAAAAAAQBAAAAAAAA=</HashCode>
+      <FileName>Settings\Hotspots\SceneHotspot.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.1" />
+  </Class>
+  <Class Name="OdekuTour.Program">
+    <Position X="4" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdekuTour.Startup">
+    <Position X="2.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAgAAACAAAAAA=</HashCode>
+      <FileName>Startup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdekuTour.Loader">
+    <Position X="5.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAgAQAAAAEAAABAAAAAA=</HashCode>
+      <FileName>Loader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Object" Collapsed="true">
+    <Position X="7.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Microsoft.AspNetCore.Mvc.Controller" Collapsed="true">
+    <Position X="10" Y="0.75" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="OdekuTour.Areas.Admin.Controllers.HomeController" Collapsed="true">
+    <Position X="15.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAAAAAgAAgAQEAAACAEAAAAAAAA=</HashCode>
+      <FileName>Areas\Admin\Controllers\HomeController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdekuTour.Areas.Admin.Controllers.HotSpotController" Collapsed="true">
+    <Position X="13.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAEAAAACAAAEAAAAAAAA=</HashCode>
+      <FileName>Areas\Admin\Controllers\HotSpotController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdekuTour.Areas.Admin.Controllers.LoginController" Collapsed="true">
+    <Position X="11.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEQAAAAAAA=</HashCode>
+      <FileName>Areas\Admin\Controllers\LoginController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdekuTour.Areas.Admin.Controllers.LoginVM">
+    <Position X="12" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Areas\Admin\Controllers\LoginController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdekuTour.Areas.Admin.Models.HotspotAddVM">
+    <Position X="13.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAIAAABAAAgAEEAQIAABAAAACAAAAAAAABAAAAAAQA=</HashCode>
+      <FileName>Areas\Admin\Models\HotspotAddVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdekuTour.Areas.Admin.Models.SceneAddVM">
+    <Position X="10.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAAAQAAGAAARAAAAAAAAAAAAA=</HashCode>
+      <FileName>Areas\Admin\Models\SceneAddVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdekuTour.Areas.Admin.Models.SceneUpdateVM">
+    <Position X="15.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAEAAAAAAAAAAAAAAAAQAAGAAARAAAAAAAAAAAAA=</HashCode>
+      <FileName>Areas\Admin\Models\SceneUpdateVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="OdekuTour.Settings.Hotspots.IHotspot">
+    <Position X="4" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAgAEEAQAAAAAAAAAAAAAAAAQBAAAAAAAA=</HashCode>
+      <FileName>Settings\Hotspots\IHotspot.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

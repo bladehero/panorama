@@ -1,0 +1,70 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Войти в панель администратора</title>
+    <link rel="stylesheet" href="~/css/bootstrap/css/bootstrap.css" />
+    <style>
+        html,
+        body,
+        .container-fluid,
+        .row {
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-4 col-md-6 col-sm-8 col-10">
+                <div class="card shadow-lg">
+                    <div class="card-header text-center lead">Панель администратора ODEKU Tour</div>
+                    <div class="card-body">
+                        <p class="text-center text-danger h5" id="error"></p>
+                        <input id="username" type="text" class="form-control mb-2" placeholder="Логин...">
+                        <input id="password" type="password" class="form-control" placeholder="Пароль...">
+                    </div>
+                    <div class="card-footer text-center">
+                        <button type="submit" class="btn btn-primary" id="login">Войти</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/js/jquery/jquery.js"></script>
+    <script src="~/js/bootstrap/js/bootstrap.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#login').click(function () {
+                var login = {};
+                login.Username = $('#username').val();
+                login.Password = $('#password').val();
+                $.ajax({
+                    method: 'POST',
+                    url: 'login/login',
+                    data: login,
+                    success: function (result) {
+                        if (result.success) {
+                            window.location = 'home/index';
+                        } else {
+                            $('#error').text(result.message);
+                        }
+                    }
+                });
+            });
+            $('#username').keydown(function () {
+                $('#error').text(null);
+            });
+            $('#password').keydown(function () {
+                $('#error').text(null);
+            });
+        });
+    </script>
+</body>
+</html>

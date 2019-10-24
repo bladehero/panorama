@@ -1,0 +1,387 @@
+﻿@using OdekuTour.Settings.Hotspots
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var scenes = OdekuTour.Loader.Scenes.OrderByDescending(x => x.IsMain && x.IsUnit);
+    bool isFirst = true;
+}
+
+<style>
+    #list-tab {
+        max-height: 100%;
+    }
+
+    .tab-pane {
+        width: 100%;
+        height: 440px;
+    }
+
+    .hotspot-point {
+        background: #4cff00;
+        height: 40px;
+        width: 2px;
+        position: relative;
+        left: 19px;
+        z-index: 9999;
+        opacity: 0.5;
+    }
+
+        .hotspot-point:after {
+            content: "";
+            height: 2px;
+            width: 40px;
+            background: #4cff00;
+            position: absolute;
+            left: -19px;
+            top: 19px;
+            z-index: 9999;
+        }
+</style>
+
+<div class="row">
+    <div class="col-3">
+        <div class="list-group" id="list-tab" role="tablist">
+            @foreach (var scene in scenes)
+            {
+                if (isFirst)
+                {
+                    <a class="list-group-item list-group-item-action active" id="scene_@scene.GetHashCode()" data-toggle="list" href="#div_@scene.GetHashCode()" role="tab" data-scene-name="@scene.Name">@scene.Name</a>
+                    isFirst = false;
+                }
+                else
+                {
+                    <a class="list-group-item list-group-item-action" id="scene_@scene.GetHashCode()" data-toggle="list" href="#div_@scene.GetHashCode()" role="tab" data-scene-name="@scene.Name">@scene.Name</a>
+                }
+            }
+        </div>
+    </div>
+    <div class="col-9">
+        <div class="tab-content" id="nav-tabContent">
+            @{
+                isFirst = true;
+            }
+            @foreach (var scene in scenes)
+            {
+                <div class="tab-pane fade @(isFirst ? "show active" : "") rounded" id="div_@scene.GetHashCode()" role="tabpanel" aria-labelledby="scene_@scene.GetHashCode()">
+                    @*<div class="position-absolute" style="top: 48%; left: 48%">
+                            <p class="hotspot-point"></p>
+                        </div>*@
+                </div>
+                isFirst = false;
+            }
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card mt-2 bg-light ">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Указатели</h5>
+                        <hr />
+                        <div class="row justify-content-center mb-2">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                <label class="btn btn-outline-dark active">
+                                    <input type="radio" name="options" id="option-move" autocomplete="off" checked> Перемещение
+                                </label>
+                                <label class="btn btn-outline-success">
+                                    <input type="radio" name="options" id="option-add" autocomplete="off" checked> Добавление
+                                </label>
+                                <label class="btn btn-outline-danger">
+                                    <input type="radio" name="options" id="option-delete" autocomplete="off"> Удаление
+                                </label>
+                            </div>
+                        </div>
+                        <a data-toggle="collapse" href="#collapseInfo" role="button" aria-expanded="false" aria-controls="collapseInfo">
+                            Показать подсказку
+                        </a>
+                        <div class="collapse" id="collapseInfo">
+                            <p class="card-text text-justify">
+                                <span class="ml-3">Кнопки</span> "Добавить" и "Удалить переключают режимы взаимодействия с указателями. Указатель - точка которая устанавливается на сцену для указания дополнительной информации или для осуществления переходов на другие сцены.
+                                <br />
+                                <span class="ml-3">- Выберите</span> режим "Перемещение", чтобы прокручивать сцену."
+                                <br />
+                                <span class="ml-3">- Выберите</span> режим "Добавление" и затем нажмите в область сцены где хотите добавить указатель.
+                                <br />
+                                <span class="ml-3">- Выберите</span> режим "Удаление", а затем нажмите левой кнопкой мыши на указатель, который хотите удалить.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card mt-2 bg-dark text-white">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Краткие сведения</h5>
+                        <hr />
+                        <div class="row ml-2">
+                            <p class="font-weight-bolder mr-2">Изображение:</p>
+                            <p class="font-weight-lighter" id="image-detail"></p>
+                        </div>
+                        <div class="row ml-2">
+                            <p class="font-weight-bolder mr-2">Автозагрузка сцены:</p>
+                            <p class="font-weight-lighter" id="auto-load-detail"></p>
+                        </div>
+                        <div class="row ml-2">
+                            <p class="font-weight-bolder mr-2">Кол-во указателей:</p>
+                            <p class="font-weight-lighter" id="hotspot-detail"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" id="add-modal-hotspot">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Добавление указателя</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="hotspot-scene" value="">
+                <input type="hidden" id="hotspot-yaw" value="">
+                <input type="hidden" id="hotspot-pitch" value="">
+                <label for="hotspot-title">Заголовок</label>
+                <input type="text" class="form-control" id="hotspot-title">
+                <label for="hotspot-subtitle">Подзаголовок</label>
+                <input type="text" class="form-control" id="hotspot-subtitle">
+                <label for="hotspot-description">Описание</label>
+                <input type="text" class="form-control" id="hotspot-description">
+                <label for="hotspot-quote">Подпись</label>
+                <input type="text" class="form-control mb-2" id="hotspot-quote">
+                <div class="row justify-content-center mb-2">
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-outline-info active" style="width: 160px;">
+                            <input type="radio" name="options" id="option-info" autocomplete="off" checked> Доп. информация
+                        </label>
+                        <label class="btn btn-outline-warning" style="width: 160px;">
+                            <input type="radio" name="options" id="option-scene" autocomplete="off" checked> Переход
+                        </label>
+                    </div>
+                </div>
+                <a data-toggle="collapse" href="#collapseInfo1" role="button" aria-expanded="false" aria-controls="collapseInfo1">
+                    Показать подсказку
+                </a>
+                <div class="collapse" id="collapseInfo1">
+                    <p class="card-text text-justify mb-2">
+                        <span class="ml-3">Существуют</span> два типа подсказок:<br />
+                        <span class="ml-3">- "Доп. информация";</span>
+                        <br />
+                        <span class="ml-3">- "Переход".</span>
+                        <br />
+                        <span class="ml-3">Для</span>  того чтобы добавить к указателю только информацию - выберите тип "Доп. информация".
+                        <br />
+                        <span class="ml-3">Для</span> того чтобы добавить переход на новую сцену - выберите тип "Переход".
+                    </p>
+                </div>
+                <div class="mt-3 mb-3">
+                    <div id="info-hotspot-row">
+                        <input type="checkbox" id="hotspot-url-checkbox">
+                        <label for="hotspot-url-checkbox">Переход на сайт по нажатию</label>
+                        <input type="text" class="form-control mb-3" disabled id="hotspot-url" placeholder="Ссылка на ресурс">
+                    </div>
+                    <div id="scene-hotspot-row" class="d-none">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputGroupSelect">Сцены</label>
+                            </div>
+                            <select class="custom-select" id="inputGroupSelect">
+                                <option selected value="empty">Выбрать...</option>
+                                @foreach (var scene in scenes)
+                                {
+                                    <option value="@scene.Name">@scene.Name (@scene.Image)</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                <button type="button" class="btn btn-success" id="add-modal-hotspot-btn">Добавить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        var viewers = [];
+        function panoramaClick(viewer, event) {
+            var coords = viewer.mouseEventToCoords(event);
+            console.log(coords[0], coords[1]);
+            if ($('#option-add').parent().hasClass('active')) {
+                if (coords[0] != 0 && coords[1] != 0) {
+                    $('#hotspot-scene').val($('#list-tab > a.list-group-item.active').first().data('scene-name'));
+                    $('#hotspot-yaw').val(coords[1]);
+                    $('#hotspot-pitch').val(coords[0]);
+                    $('#add-modal-hotspot').modal('show');
+                }
+            }
+        }
+        $(document).ready(function () {
+            @{
+                int counter = 0;
+            }
+            @foreach (var scene in scenes)
+            {
+               @:   viewers[@counter] = pannellum.viewer('div_@scene.GetHashCode()', {
+               @:   'panorama': '/@scene.Panorama',
+               @:   'showFullscreenCtrl': @scene.ShowFullscreenCtrl.ToString().ToLower(),
+               @:   'autoLoad': @scene.AutoLoad.ToString().ToLower(),
+               @:   'hfov': @scene.Hfov.ToString().Replace(",", "."),
+               @:   'hotSpots': [
+                    int id = 0;
+                    foreach (var hotspot in scene.Hotspots)
+                    {
+                        @:{
+                        @: 'pitch': @hotspot.Pitch.ToString().Replace(",", "."),
+                        @: 'yaw': @hotspot.Yaw.ToString().Replace(",", "."),
+                        @: 'type': '@hotspot.Type',
+                        @: 'clickHandlerFunc': hotspotClickHandler,
+                        @: 'clickHandlerArgs': { 'id': '@id', 'sceneId': '@scene.Name' }
+                        @:},
+                        id++;
+                    }
+               @: ] });
+               @: viewers[@counter].on('mousedown', function (event) {
+               @:    panoramaClick(viewers[@counter], event);
+               @: });
+               counter++;
+            }
+
+            function hotspotClickHandler(obj, args) {
+                if ($('#option-delete').parent().hasClass('active')) {
+                    $.ajax({
+                        method: 'POST',
+                        url: '@Url.Action("DeleteHotspot", "HotSpot")',
+                        data: args
+                    }).done(function (result) {
+                        if (result.success) {
+                            swal({
+                                title: "Успешно",
+                                text: result.message,
+                                icon: "success",
+                                button: "ОК",
+                            }).then(function () {
+                                document.location.reload();
+                            });
+                        } else {
+                            swal({
+                                title: "Ошибка!",
+                                text: result.message,
+                                icon: "error",
+                                button: "ОК",
+                            }).then(function () {
+                                document.location.reload();
+                            });
+                        }
+                    });
+                }
+            }
+        });
+        $(document).ready(function () {
+            if (viewers[0]) {
+                setDetails($(viewers[0].getContainer()).prop('id'));
+            }
+            $('#option-info').change(function () {
+                $('#info-hotspot-row').removeClass('d-none');
+                $('#scene-hotspot-row').addClass('d-none');
+            });
+            $('#option-scene').change(function () {
+                $('#info-hotspot-row').addClass('d-none');
+                $('#scene-hotspot-row').removeClass('d-none');
+            });
+            $('#hotspot-url-checkbox').change(function () {
+                if ($('#hotspot-url').prop('disabled')) {
+                    $('#hotspot-url').prop('disabled', false);
+                } else {
+                    $('#hotspot-url').prop('disabled', true);
+                }
+            });
+            $('#navbar-panel .nav-link').removeClass('active');
+            $('#hotspot-link').addClass('active');
+            $('.list-group-item').click(function () {
+                setTimeout(function () {
+                    for (var i = 0; i < viewers.length; i++) {
+                        viewers[i].resize();
+                    }
+                }, 250);
+                setTimeout(function () {
+                    for (var i = 0; i < viewers.length; i++) {
+                        viewers[i].resize();
+                    }
+                }, 500);
+                var href = $(this).prop('href');
+                var id = href.substr(href.indexOf('#') + 1, href.length);
+                setDetails(id);
+            });
+            function setDetails(id) {
+                var viewer;
+                for (var i = 0; i < viewers.length; i++) {
+                    if ($(viewers[i].getContainer()).prop('id') == id) {
+                        viewer = viewers[i];
+                        break;
+                    }
+                }
+                if (viewer) {
+                    var config = viewer.getConfig();
+                    $('#image-detail').text(config.panorama.replace('/images/', '').replace('images/', ''));
+                    $('#auto-load-detail').text(config.autoLoad ? 'Включено' : 'Выключено');
+                    $('#hotspot-detail').text(config.hotSpots.length);
+                }
+            }
+            $('#add-modal-hotspot-btn').click(function () {
+                var hotspot = {
+                    HotspotType: $('#option-info').parent().hasClass('active') ? 'info' : 'scene',
+                    CurrentSceneId: $('#hotspot-scene').val(),
+                    Yaw: $('#hotspot-yaw').val(),
+                    Pitch: $('#hotspot-pitch').val(),
+                    Title: $('#hotspot-title').val(),
+                    Subtitle: $('#hotspot-subtitle').val(),
+                    Description: $('#hotspot-description').val(),
+                    Footer: $('#hotspot-quote').val()
+                };
+                if ($('#option-info').parent().hasClass('active')) {
+                    hotspot.hasURL = $('#hotspot-url-checkbox').prop('checked');
+                    hotspot.URL = hotspot.hasURL ? $('#hotspot-url').val() : null;
+                } else if ($('#option-scene').parent().hasClass('active')) {
+                    hotspot.hasNextSceneId = $('#inputGroupSelect :selected').val() === 'empty' ? false : true;
+                    if (hotspot.hasNextSceneId) {
+                        hotspot.nextSceneId = $('#inputGroupSelect :selected').val();
+                    }
+                }
+                if (false) {
+                    // TODO: Validate model...
+                }
+                $.ajax({
+                    method: 'POST',
+                    url: '@Url.Action("AddHotspot", "HotSpot")',
+                    data: hotspot
+                }).done(function (result) {
+                    if (result.success) {
+                        swal({
+                            title: "Успешно",
+                            text: result.message,
+                            icon: "success",
+                            button: "ОК",
+                        }).then(function () {
+                            document.location.reload();
+                        });
+                        $('#add-modal-hotspot').modal('hide');
+                    } else {
+                        swal({
+                            title: "Ошибка!",
+                            text: result.message,
+                            icon: "error",
+                            button: "ОК",
+                        }).then(function () {
+                            document.location.reload();
+                        });
+                        $('#add-modal-hotspot').modal('hide');
+                    }
+                });
+            });
+        });
+    </script>
+}
