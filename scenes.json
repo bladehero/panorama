@@ -3,7 +3,7 @@
   "$values": [
     {
       "$type": "OdekuTour.Settings.Scene, OdekuTour",
-      "Name": "Сцена №1",
+      "Name": "Scene #1",
       "Panorama": "images/Scene1.jpg",
       "Image": "Scene1.jpg",
       "ShowFullscreenCtrl": false,
@@ -19,56 +19,25 @@
             "Pitch": 3.3632171673033673,
             "Yaw": 1.419129560576073,
             "Type": "scene",
-            "SceneId": "Сцена №2",
-            "Title": "Указатель №1",
-            "Subtitle": "Подзаголовок",
-            "Description": "Описание",
-            "Footer": "Подпись"
+            "SceneId": "Scene #2",
+            "Title": "Pointer #1",
+            "Subtitle": "Sub title",
+            "Description": "Description",
+            "Footer": "Quote"
           }
         ]
       }
     },
     {
       "$type": "OdekuTour.Settings.Scene, OdekuTour",
-      "Name": "Сцена №2",
+      "Name": "Scene #2",
       "Panorama": "images/Scene2.jpg",
       "Image": "Scene2.jpg",
       "ShowFullscreenCtrl": false,
       "AutoLoad": true,
       "Hfov": 180,
       "IsMain": false,
-      "IsUnit": true,
-      "Hotspots": {
-        "$type": "System.Collections.Generic.List`1[[OdekuTour.Settings.Hotspots.IHotspot, OdekuTour]], System.Private.CoreLib",
-        "$values": [
-          {
-            "$type": "OdekuTour.Settings.Hotspots.SceneHotspot, OdekuTour",
-            "Pitch": -25.735494263771365,
-            "Yaw": -3.388222701432209,
-            "Type": "scene",
-            "SceneId": "Сцена №3",
-            "Title": "йц",
-            "Subtitle": "йц",
-            "Description": "йц",
-            "Footer": "й"
-          }
-        ]
-      }
-    },
-    {
-      "$type": "OdekuTour.Settings.Scene, OdekuTour",
-      "Name": "Сцена №3",
-      "Panorama": "images/Scene3.jpg",
-      "Image": "Scene3.jpg",
-      "ShowFullscreenCtrl": false,
-      "AutoLoad": true,
-      "Hfov": 180,
-      "IsMain": false,
-      "IsUnit": true,
-      "Hotspots": {
-        "$type": "System.Collections.Generic.List`1[[OdekuTour.Settings.Hotspots.IHotspot, OdekuTour]], System.Private.CoreLib",
-        "$values": []
-      }
+      "IsUnit": true
     }
   ]
 }

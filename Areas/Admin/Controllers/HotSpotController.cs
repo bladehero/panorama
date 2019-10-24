@@ -19,7 +19,7 @@ namespace OdekuTour.Areas.Admin.Controllers
         public IActionResult AddHotspot(HotspotAddVM hotspot)
         {
             var success = true;
-            var message = "Указатель был успешно добавлен!";
+            var message = "Pointer was successfully added!";
             IHotspot hotspotToAdd = null;
             try
             {
@@ -42,7 +42,7 @@ namespace OdekuTour.Areas.Admin.Controllers
                 {
                     if (!hotspot.HasNextSceneId)
                     {
-                        throw new Exception("Указатель должен иметь сцену на которую будет совершаться переход!");
+                        throw new Exception("Pointer should have scene!");
                     }
                     hotspotToAdd = new SceneHotspot
                     {
@@ -64,7 +64,7 @@ namespace OdekuTour.Areas.Admin.Controllers
                 }
                 else
                 {
-                    throw new Exception($"Сцена с именем {hotspot.CurrentSceneId} не найдена!");
+                    throw new Exception($"Scene isn't found with name '{hotspot.CurrentSceneId}'!");
                 }
             }
             catch (Exception ex)
@@ -79,7 +79,7 @@ namespace OdekuTour.Areas.Admin.Controllers
         public IActionResult DeleteHotspot(int id, string sceneId)
         {
             var success = true;
-            var message = "Указатель был успешно удален!";
+            var message = "Pointer was successfully deleted!";
             try
             {
                 var scene = Loader.Scenes.FirstOrDefault(x => x.Name == WebUtility.HtmlDecode(sceneId) || x.Name == sceneId);
@@ -90,7 +90,7 @@ namespace OdekuTour.Areas.Admin.Controllers
                 }
                 else
                 {
-                    throw new Exception($"Сцена не найдена!");
+                    throw new Exception($"Scene isn't found!");
                 }
             }
             catch (Exception ex)

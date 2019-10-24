@@ -62,9 +62,6 @@
             @foreach (var scene in scenes)
             {
                 <div class="tab-pane fade @(isFirst ? "show active" : "") rounded" id="div_@scene.GetHashCode()" role="tabpanel" aria-labelledby="scene_@scene.GetHashCode()">
-                    @*<div class="position-absolute" style="top: 48%; left: 48%">
-                            <p class="hotspot-point"></p>
-                        </div>*@
                 </div>
                 isFirst = false;
             }
@@ -73,33 +70,33 @@
             <div class="col-lg-6">
                 <div class="card mt-2 bg-light ">
                     <div class="card-body">
-                        <h5 class="card-title text-center">Указатели</h5>
+                        <h5 class="card-title text-center">Pointers</h5>
                         <hr />
                         <div class="row justify-content-center mb-2">
                             <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                 <label class="btn btn-outline-dark active">
-                                    <input type="radio" name="options" id="option-move" autocomplete="off" checked> Перемещение
+                                    <input type="radio" name="options" id="option-move" autocomplete="off" checked> Transfer
                                 </label>
                                 <label class="btn btn-outline-success">
-                                    <input type="radio" name="options" id="option-add" autocomplete="off" checked> Добавление
+                                    <input type="radio" name="options" id="option-add" autocomplete="off" checked> Add
                                 </label>
                                 <label class="btn btn-outline-danger">
-                                    <input type="radio" name="options" id="option-delete" autocomplete="off"> Удаление
+                                    <input type="radio" name="options" id="option-delete" autocomplete="off"> Remove
                                 </label>
                             </div>
                         </div>
                         <a data-toggle="collapse" href="#collapseInfo" role="button" aria-expanded="false" aria-controls="collapseInfo">
-                            Показать подсказку
+                            Show info
                         </a>
                         <div class="collapse" id="collapseInfo">
                             <p class="card-text text-justify">
-                                <span class="ml-3">Кнопки</span> "Добавить" и "Удалить переключают режимы взаимодействия с указателями. Указатель - точка которая устанавливается на сцену для указания дополнительной информации или для осуществления переходов на другие сцены.
+                                <span class="ml-3">Buttons</span> "Add" and "Delete switch modes of interaction with pointers. Pointer - a point that is set on the scene to indicate additional information or to make transitions to other scenes.
                                 <br />
-                                <span class="ml-3">- Выберите</span> режим "Перемещение", чтобы прокручивать сцену."
+                                <span class="ml-3">- Select </span> "Move" mode to scroll through the scene. "
                                 <br />
-                                <span class="ml-3">- Выберите</span> режим "Добавление" и затем нажмите в область сцены где хотите добавить указатель.
+                                <span class="ml-3">- Select </span> "Add" mode and then click on the scene area where you want to add a pointer.
                                 <br />
-                                <span class="ml-3">- Выберите</span> режим "Удаление", а затем нажмите левой кнопкой мыши на указатель, который хотите удалить.
+                                <span class="ml-3">- Select </span> "Delete" mode, and then left-click on the pointer that you want to delete.
                             </p>
                         </div>
                     </div>
@@ -108,18 +105,18 @@
             <div class="col-lg-6">
                 <div class="card mt-2 bg-dark text-white">
                     <div class="card-body">
-                        <h5 class="card-title text-center">Краткие сведения</h5>
+                        <h5 class="card-title text-center">Description</h5>
                         <hr />
                         <div class="row ml-2">
-                            <p class="font-weight-bolder mr-2">Изображение:</p>
+                            <p class="font-weight-bolder mr-2">Image:</p>
                             <p class="font-weight-lighter" id="image-detail"></p>
                         </div>
                         <div class="row ml-2">
-                            <p class="font-weight-bolder mr-2">Автозагрузка сцены:</p>
+                            <p class="font-weight-bolder mr-2">Autoload:</p>
                             <p class="font-weight-lighter" id="auto-load-detail"></p>
                         </div>
                         <div class="row ml-2">
-                            <p class="font-weight-bolder mr-2">Кол-во указателей:</p>
+                            <p class="font-weight-bolder mr-2">Pointers:</p>
                             <p class="font-weight-lighter" id="hotspot-detail"></p>
                         </div>
                     </div>
@@ -132,7 +129,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Добавление указателя</h5>
+                <h5 class="modal-title">Add pointer</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -141,52 +138,52 @@
                 <input type="hidden" id="hotspot-scene" value="">
                 <input type="hidden" id="hotspot-yaw" value="">
                 <input type="hidden" id="hotspot-pitch" value="">
-                <label for="hotspot-title">Заголовок</label>
+                <label for="hotspot-title">Title</label>
                 <input type="text" class="form-control" id="hotspot-title">
-                <label for="hotspot-subtitle">Подзаголовок</label>
+                <label for="hotspot-subtitle">Subtitle</label>
                 <input type="text" class="form-control" id="hotspot-subtitle">
-                <label for="hotspot-description">Описание</label>
+                <label for="hotspot-description">Description</label>
                 <input type="text" class="form-control" id="hotspot-description">
-                <label for="hotspot-quote">Подпись</label>
+                <label for="hotspot-quote">Quote</label>
                 <input type="text" class="form-control mb-2" id="hotspot-quote">
                 <div class="row justify-content-center mb-2">
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                         <label class="btn btn-outline-info active" style="width: 160px;">
-                            <input type="radio" name="options" id="option-info" autocomplete="off" checked> Доп. информация
+                            <input type="radio" name="options" id="option-info" autocomplete="off" checked> Info
                         </label>
                         <label class="btn btn-outline-warning" style="width: 160px;">
-                            <input type="radio" name="options" id="option-scene" autocomplete="off" checked> Переход
+                            <input type="radio" name="options" id="option-scene" autocomplete="off" checked> Transfer
                         </label>
                     </div>
                 </div>
                 <a data-toggle="collapse" href="#collapseInfo1" role="button" aria-expanded="false" aria-controls="collapseInfo1">
-                    Показать подсказку
+                    Show info
                 </a>
                 <div class="collapse" id="collapseInfo1">
                     <p class="card-text text-justify mb-2">
-                        <span class="ml-3">Существуют</span> два типа подсказок:<br />
-                        <span class="ml-3">- "Доп. информация";</span>
+                        <span class="ml-3"> There are two types of hints </span>: <br />
+                        <span class="ml-3"> - "Extras"; </span>
                         <br />
-                        <span class="ml-3">- "Переход".</span>
+                        <span class="ml-3"> - "Transition". </span>
                         <br />
-                        <span class="ml-3">Для</span>  того чтобы добавить к указателю только информацию - выберите тип "Доп. информация".
+                        <span class="ml-3"> To </span> to add only information to the index, select the type "Additional Information".
                         <br />
-                        <span class="ml-3">Для</span> того чтобы добавить переход на новую сцену - выберите тип "Переход".
+                        <span class="ml-3"> To </span> add a transition to a new scene, select the "Transition" type.
                     </p>
                 </div>
                 <div class="mt-3 mb-3">
                     <div id="info-hotspot-row">
                         <input type="checkbox" id="hotspot-url-checkbox">
-                        <label for="hotspot-url-checkbox">Переход на сайт по нажатию</label>
-                        <input type="text" class="form-control mb-3" disabled id="hotspot-url" placeholder="Ссылка на ресурс">
+                        <label for="hotspot-url-checkbox">Transfer by click</label>
+                        <input type="text" class="form-control mb-3" disabled id="hotspot-url" placeholder="Link to service">
                     </div>
                     <div id="scene-hotspot-row" class="d-none">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <label class="input-group-text" for="inputGroupSelect">Сцены</label>
+                                <label class="input-group-text" for="inputGroupSelect">Scenes</label>
                             </div>
                             <select class="custom-select" id="inputGroupSelect">
-                                <option selected value="empty">Выбрать...</option>
+                                <option selected value="empty">Select...</option>
                                 @foreach (var scene in scenes)
                                 {
                                     <option value="@scene.Name">@scene.Name (@scene.Image)</option>
@@ -197,8 +194,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-                <button type="button" class="btn btn-success" id="add-modal-hotspot-btn">Добавить</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" id="add-modal-hotspot-btn">Add</button>
             </div>
         </div>
     </div>
@@ -259,19 +256,19 @@
                     }).done(function (result) {
                         if (result.success) {
                             swal({
-                                title: "Успешно",
+                                title: "Success",
                                 text: result.message,
                                 icon: "success",
-                                button: "ОК",
+                                button: "OK",
                             }).then(function () {
                                 document.location.reload();
                             });
                         } else {
                             swal({
-                                title: "Ошибка!",
+                                title: "Error!",
                                 text: result.message,
                                 icon: "error",
-                                button: "ОК",
+                                button: "OK",
                             }).then(function () {
                                 document.location.reload();
                             });
@@ -327,7 +324,7 @@
                 if (viewer) {
                     var config = viewer.getConfig();
                     $('#image-detail').text(config.panorama.replace('/images/', '').replace('images/', ''));
-                    $('#auto-load-detail').text(config.autoLoad ? 'Включено' : 'Выключено');
+                    $('#auto-load-detail').text(config.autoLoad ? 'Enabled' : 'Disabled');
                     $('#hotspot-detail').text(config.hotSpots.length);
                 }
             }
@@ -361,20 +358,20 @@
                 }).done(function (result) {
                     if (result.success) {
                         swal({
-                            title: "Успешно",
+                            title: "Success",
                             text: result.message,
                             icon: "success",
-                            button: "ОК",
+                            button: "OK",
                         }).then(function () {
                             document.location.reload();
                         });
                         $('#add-modal-hotspot').modal('hide');
                     } else {
                         swal({
-                            title: "Ошибка!",
+                            title: "Error!",
                             text: result.message,
                             icon: "error",
-                            button: "ОК",
+                            button: "OK",
                         }).then(function () {
                             document.location.reload();
                         });

@@ -25,7 +25,7 @@ namespace OdekuTour.Areas.Admin.Controllers
                 Response.Cookies.Append(TokenMiddleware._key, TokenMiddleware.GetMD5Hash(login.Username, login.Password), options);
                 return new ObjectResult(new { Success = true });
             }
-            return new ObjectResult(new { Success = false, Message = "Неверный логин или пароль!" });
+            return new ObjectResult(new { Success = false, Message = "Incorrect credentials!" });
         }
     }
 
