@@ -4,7 +4,17 @@
     var main = OdekuTour.Loader.Main;
     var units = OdekuTour.Loader.Units;
 }
+<style>
+    .pnlm-load-box {
+        z-index: -999;
+        opacity: 0;
+    }
 
+    .pnlm-about-msg {
+        z-index: -999;
+        opacity: 0 !important;
+    }
+</style>
 <div id="panorama"></div>
 @section Scripts{
     <script>
@@ -12,6 +22,7 @@
             var viewer = pannellum.viewer('panorama', {
                 'default': {
                     'firstScene': '@main.GetHashCode()',
+                    "sceneFadeDuration": 1000
                 },
                 'scenes': {
                     @foreach (var scene in scenes)
@@ -92,6 +103,12 @@
                 @:     $('.nav-link').removeClass('active');
                 @:     $(this).addClass('active');
                 @: });
+            }
+            
+            @foreach (var scene in scenes)
+            {
+                @: var image = new Image();
+                @: image.src = "images/@scene.Image";
             }
         });
     </script>
