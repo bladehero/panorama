@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OdekuTour.Areas.Admin.Models;
+using OdekuTour.Middlewares;
 using OdekuTour.Settings;
 using System;
 using System.IO;
@@ -16,6 +17,22 @@ namespace OdekuTour.Areas.Admin.Controllers
         public HomeController(IHostingEnvironment hostingEnvironment)
         {
             _hostingEnvironment = hostingEnvironment;
+        }
+
+        [HttpPost]
+        public IActionResult Logout()
+        {
+            bool success;
+            try
+            {
+                Response.Cookies.Delete(TokenMiddleware._key);
+                success = true;
+            }
+            catch (Exception)
+            {
+                success = false;
+            }
+            return Json(new { success });
         }
 
         public IActionResult Index()

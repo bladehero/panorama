@@ -44,14 +44,16 @@
     <script src="~/sweetalert/sweetalert.min.js"></script>
     <script>
         $(document).ready(function () {
-            function clearCookie(name, domain, path) {
-                var domain = domain || document.domain;
-                var path = path || "/";
-                document.cookie = name + "=; expires=" + +new Date + "; domain=" + domain + "; path=" + path;
-            };
             $('#logout').click(function () {
-                clearCookie('__auth__');
-                window.location.replace('@Url.Action("Index", "Login")');
+                $.ajax({
+                    url: '@Url.Action("Logout", "Home", new { area = "Admin" })',
+                    method: 'POST',
+                    success: function (data) {
+                        if (data.success) {
+                            window.location.replace('@Url.Action("Index", "Login")');
+                        }
+                    }
+                });
             });
         });
     </script>
