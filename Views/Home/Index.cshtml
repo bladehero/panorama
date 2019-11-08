@@ -63,6 +63,16 @@
                 }
             });
 
+            viewer.on('scenechange', function () {
+                setTimeout(function () {
+                    $(fakeLoaderEl).fadeOut();
+                }, 300);
+            });
+
+            setTimeout(function () {
+                viewer.loadScene('@main.GetHashCode()');
+            }, 300);
+
             viewer.on('mousedown', function (event) {
                 console.log(viewer.getPitch(), viewer.getYaw());
                 console.log(viewer.mouseEventToCoords(event));
@@ -96,6 +106,7 @@
                 $('.nav-link').removeClass('active');
                 $(this).addClass('active');
             });
+
             @foreach (var unit in units)
             {
                 @: $('#@unit.Name.GetHashCode()').click(function() {
@@ -103,12 +114,6 @@
                 @:     $('.nav-link').removeClass('active');
                 @:     $(this).addClass('active');
                 @: });
-            }
-            
-            @foreach (var scene in scenes)
-            {
-                @: var image = new Image();
-                @: image.src = "images/@scene.Image";
             }
         });
     </script>

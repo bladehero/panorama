@@ -12,9 +12,14 @@
     <link rel="stylesheet" href="~/css/bootstrap/css/bootstrap.css" />
     <link href="~/pannellum/pannellum.css" rel="stylesheet" />
     <link href="~/css/animate/animate.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/fakeLoader/css/fakeLoader.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <script src="~/js/jquery/jquery.min.js"></script>
+    <script src="~/fakeLoader/js/fakeLoader.js"></script>
 </head>
 <body>
+    <div class="fakeLoader"></div>
+    <script>var fakeLoaderEl = $.fakeLoader({ timeToHide: 2000, spinner: "spinner1" });</script>
     <div class="container-fluid" id="main-container">
         <div class="row ml-4 mr-4 d-lg-flex justify-content-lg-center justify-content-end">
             <nav class="navbar navbar-expand-lg navbar-light rounded">
@@ -51,8 +56,7 @@
         @RenderBody()
     </div>
 
-    <script src="~/js/jquery/jquery.js"></script>
-    <script src="~/js/bootstrap/js/bootstrap.js"></script>
+    <script src="~/js/bootstrap/js/bootstrap.min.js"></script>
     <script src="~/pannellum/pannellum.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
