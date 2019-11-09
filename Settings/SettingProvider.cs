@@ -11,7 +11,7 @@ namespace OdekuTour.Settings
 
         public static SettingMessage Serialize(IEnumerable<Scene> scenes)
         {
-            SettingMessage message = new SettingMessage("Сцены были успешно обновлены!");
+            SettingMessage message = new SettingMessage("Scenes was successfully deleted!");
             try
             {
                 var indented = Formatting.Indented;
@@ -27,7 +27,7 @@ namespace OdekuTour.Settings
             }
             catch (Exception ex)
             {
-                message = new SettingMessage("При обновлении сцен произошла ошибка!", ex);
+                message = new SettingMessage("while updating scenes an error occured!", ex);
             }
             return message;
         }

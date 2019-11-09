@@ -181,7 +181,8 @@
                 $('#del-modal-scene').modal('show');
                 $('#del-scene-btn').off('click').click(function () {
                     $.ajax({
-                        url: '@Url.Action("DeleteScene", "Home")?name=' + name,
+                        url: '@Url.Action("DeleteScene", "Home")',
+                        data: { name: name },
                         success: function (result) {
                             if (result.success) {
                                 swal({
