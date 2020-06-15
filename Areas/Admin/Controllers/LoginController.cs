@@ -16,16 +16,23 @@ namespace OdekuTour.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Login(LoginVM login)
         {
-            if (TokenMiddleware.Login == login.Username && TokenMiddleware.Password == login.Password)
+            try
             {
-                var options = new CookieOptions
+                if (TokenMiddleware.Login == login.Username && TokenMiddleware.Password == login.Password)
                 {
-                    Expires = DateTime.MaxValue
-                };
-                Response.Cookies.Append(TokenMiddleware._key, TokenMiddleware.GetMD5Hash(login.Username, login.Password), options);
-                return new ObjectResult(new { Success = true });
+                    var options = new CookieOptions
+                    {
+                        Expires = DateTimeOffset.MaxValue
+                    };
+                    Response.Cookies.Append(TokenMiddleware._key, TokenMiddleware.GetMD5Hash(login.Username, login.Password), options);
+                    return Json(new { Success = true });
+                }
+                return new ObjectResult(new { Success = false, Message = "Incorrect credentials!" });
             }
-            return new ObjectResult(new { Success = false, Message = "Incorrect credentials!" });
+            catch (Exception ex)
+            {
+                return new ObjectResult(new { Success = false, Message = "Error", Details = $"{ex.Message}\n{ex.StackTrace}" });
+            }
         }
     }
 

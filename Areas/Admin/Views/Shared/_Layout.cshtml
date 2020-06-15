@@ -50,7 +50,7 @@
                     method: 'POST',
                     success: function (data) {
                         if (data.success) {
-                            window.location.replace('@Url.Action("Index", "Login")');
+                            window.location.replace('@Url.Action("Index", "Login", new { area = "Admin" })');
                         }
                     }
                 });
